@@ -187,6 +187,29 @@ def get_host(request):
         except Exception as msg:
             return HttpResponse(msg, status=404)
 
+@token_verify()
+def get_ip(request):
+    d = []
+    try:
+        ip = request.GET['ip']
+    except Exception as msg:
+        return HttpResponse(msg, status=404)
+    if ip == "all":
+        all_host = Host.objects.all()
+        ret_host = {'ip': ip, 'members': []}
+        for h in all_host:
+            ret_h = {'hostname': h.hostname, 'ipaddr': h.ip}
+            ret_host['members'].append(ret_h)
+        d.append(ret_host)
+        return HttpResponse(json.dumps(d))
+    else:
+        try:
+            host = Host.objects.get(ip=ip)
+            data = {'hostname': host.hostname, 'ip': host.ip}
+            return HttpResponse(json.dumps({'status': 0, 'message': 'ok', 'data': data}))
+        except Exception as msg:
+            return HttpResponse(msg, status=404)
+
 
 @token_verify()
 def get_group(request):

@@ -24,12 +24,12 @@
                       </thead>
                             <tbody>
                                 <tr class="even gradeX">
-                                    <td>主机名</td>
-                                    <td>{{ host.hostname }}</td>
-                                </tr>
-                                <tr class="even gradeX">
                                     <td>管理IP</td>
                                     <td>{{ host.ip }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>主机名</td>
+                                    <td>{{ host.hostname }}</td>
                                 </tr>
                                 <tr class="even gradeX">
                                     <td>CPU型号</td>
@@ -45,10 +45,11 @@
                                 </tr>
                                 <tr class="even gradeX">
                                 <td>硬盘信息</td>
-                                <td> {{ host.disk }}
-{#                                    {% for d in disk %}#}
-{#                                    {{ d }}<br>#}
-{#                                    {% endfor %}#}
+                                <td>
+{#                                    {{ host.disk }}#}
+                                    {% for device in disk %}
+                                    {{ device }}<br>
+                                    {% endfor %}
                                 </td>
                                 </tr>
                                 <tr class="even gradeX">

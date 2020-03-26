@@ -239,7 +239,8 @@ def get_net_info():
 def agg_sys_info():
 
     logging.info('Get the system infos from host:')
-    sys_info = {'hostname': platform.node(),
+    sys_info = {'ip': get_ip(),
+                # 'hostname': platform.node(),
                 'cpu': get_sys_cpu(),
                 'mem': get_sys_mem(),
                 'disk': get_sys_disk(),

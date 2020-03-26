@@ -104,7 +104,7 @@ def create_asset_excel(export, asset_id_all):
             file_name = 'adminset_cmdb_' + now + '.csv'
             response['Content-Disposition'] = "attachment; filename="+file_name
             writer = csv.writer(response)
-            writer.writerow([str2gb(u'主机名'), str2gb(u'IP地址'), str2gb(u'其它IP'), str2gb(u'所在机房'),
+            writer.writerow([ str2gb(u'IP地址'), str2gb(u'主机名'),str2gb(u'其它IP'), str2gb(u'所在机房'),
                              str2gb(u'资产编号'), str2gb(u'设备类型'), str2gb(u'设备状态'), str2gb(u'操作系统'),
                              str2gb(u'设备厂商'), str2gb(u'CPU型号'), str2gb(u'CPU核数'), str2gb(u'内存大小'),
                              str2gb(u'硬盘信息'), str2gb(u'SN号码'), str2gb(u'所在位置'),
@@ -120,7 +120,7 @@ def create_asset_excel(export, asset_id_all):
                     a_status = ASSET_STATUS[at_as-1][1]
                 else:
                     a_status = ""
-                writer.writerow([str2gb(h.hostname), h.ip, h.other_ip, str2gb(h.idc), str2gb(h.asset_no),
+                writer.writerow([ h.ip, str2gb(h.hostname), h.other_ip, str2gb(h.idc), str2gb(h.asset_no),
                                  str2gb(a_type), str2gb(a_status), str2gb(h.os), str2gb(h.vendor),
                                  str2gb(h.cpu_model), str2gb(h.cpu_num), str2gb(h.memory), str2gb(h.disk),
                                  str2gb(h.sn), str2gb(h.position), str2gb(h.memo)])
@@ -133,7 +133,7 @@ def create_asset_excel(export, asset_id_all):
         file_name = 'adminset_cmdb_' + now + '.csv'
         response['Content-Disposition'] = "attachment; filename=" + file_name
         writer = csv.writer(response)
-        writer.writerow([str2gb('主机名'), str2gb('IP地址'), str2gb('其它IP'), str2gb('所在机房'), str2gb('资产编号'),
+        writer.writerow([str2gb('IP地址'), str2gb('主机名'), str2gb('其它IP'), str2gb('所在机房'), str2gb('资产编号'),
                          str2gb('设备类型'), str2gb('设备状态'), str2gb('操作系统'), str2gb('设备厂商'), str2gb('CPU型号'),
                          str2gb('CPU核数'), str2gb('内存大小'), str2gb('硬盘信息'), str2gb('SN号码'),
                          str2gb('所在位置'), str2gb('备注信息')])
@@ -148,7 +148,7 @@ def create_asset_excel(export, asset_id_all):
                 a_status = ASSET_STATUS[at_as-1][1]
             else:
                 a_status = ""
-            writer.writerow([str2gb(h.hostname), h.ip, h.other_ip, str2gb(h.idc), str2gb(h.asset_no), str2gb(a_type),
+            writer.writerow([h.ip, str2gb(h.hostname), h.other_ip, str2gb(h.idc), str2gb(h.asset_no), str2gb(a_type),
                              str2gb(a_status), str2gb(h.os), str2gb(h.vendor), str2gb(h.cpu_model), str2gb(h.cpu_num),
                              str2gb(h.memory), str2gb(h.disk), str2gb(h.sn), str2gb(h.position),
                              str2gb(h.memo)])
@@ -169,14 +169,14 @@ def asset_import(request):
                 title = next(csv.reader(f))
                 for data in csv.reader(f):
                     data0 = str2gb2utf8(data[0])
-                    if data0 == u"主机名":
+                    if data0 == u"IP地址":
                         continue
                     try:
-                        host = Host.objects.get(hostname=data0)
+                        host = Host.objects.get(ip=data0)
                     except Exception as msg:
                         host = Host()
-                        host.hostname = data0
-                    host.ip = data[1]
+                        host.ip = data0
+                    host.hostname = data[1]
                     host.other_ip = str2gb2utf8(data[2])
                     if data[3]:
                         try:
@@ -308,7 +308,7 @@ def webssh(request, ids):
 def node_status(request, ids):
     data = 2
     host = Host.objects.get(id=ids)
-    cpu_data = GetSysData(host.hostname, "cpu", 1800)
+    cpu_data = GetSysData(host.ip, "cpu", 1800)
     for doc in cpu_data.get_data():
         if doc:
             data = 1

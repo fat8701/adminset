@@ -185,8 +185,8 @@
                                 <input id="checkall" type="checkbox" class="i-checks" name="checkall" value="checkall" data-editable='false' onclick="check_all('asset_form')">
                             </th>
                                     <th>节点状态</th>
-                                    <th>主机名</th>
                                     <th>管理IP</th>
+                                    <th>主机名</th>
                                     <th>CPU</th>
                                     <th>内存(G)</th>
                                     <th>机房</th>
@@ -200,8 +200,8 @@
                                         <td>
                                             <span id="node_{{ host.id }}" class="fa fa-circle" aria-hidden="true" style="color: lightgray" data-toggle="tooltip" data-placement="right" title="Unknow"></span>
                                         </td>
-                                        <td><a href="#"><li style="list-style-type:none" onclick="return detail(this.value)" value="{{ host.id }}"> {{ host.hostname }}</li></a></td>
-                                        <td>{{ host.ip }}</td>
+                                        <td><a href="#"><li style="list-style-type:none" onclick="return detail(this.value)" value="{{ host.id }}"> {{ host.ip }}</li></a></td>
+                                        <td>{{ host.hostname }}</td>
                                         <td>{{ host.cpu_num }}</td>
                                         <td>{{ host.memory }}</td>
                                         <td>{{ host.idc }}</td>

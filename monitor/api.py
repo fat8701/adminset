@@ -12,8 +12,8 @@ from django.views.decorators.csrf import csrf_exempt
 class GetSysData(object):
     db = get_dir("mongodb_collection")
 
-    def __init__(self, hostname, monitor_item, timing, no=0):
-        self.hostname = hostname
+    def __init__(self, ip, monitor_item, timing, no=0):
+        self.ip = ip
         self.monitor_item = monitor_item
         self.timing = timing
         self.no = no
@@ -34,7 +34,7 @@ class GetSysData(object):
     def get_data(self):
         client = self.connect_db()
         db = client[self.db]
-        collection = db[self.hostname]
+        collection = db[self.ip]
         now_time = int(time.time())
         find_time = now_time-self.timing
         cursor = collection.find({'timestamp': {'$gte': find_time}}, {self.monitor_item: 1, "timestamp": 1}).limit(self.no)
@@ -46,11 +46,11 @@ class GetSysData(object):
 def received_sys_info(request):
     if request.method == 'POST':
         received_json_data = json.loads(request.body)
-        hostname = received_json_data["hostname"]
+        ip = received_json_data["ip"]
         received_json_data['timestamp'] = int(time.time())
         client = GetSysData.connect_db()
         db = client[GetSysData.db]
-        collection = db[hostname]
+        collection = db[ip]
         collection.insert_one(received_json_data)
         return HttpResponse("Post the system Monitor Data successfully!")
     else:
