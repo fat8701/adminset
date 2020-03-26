@@ -1,5 +1,6 @@
 #!/bin/bash
 #
+service adminsetd stop
 set -e
 cd "$( dirname "$0"  )"
 cur_dir=$(pwd)
@@ -13,10 +14,11 @@ then
     yum install -y gcc smartmontools dmidecode python-pip python-devel  libselinux-python dos2unix
 elif (echo $os|grep Ubuntu)
 then
+    export DEBIAN_FRONTEND=noninteractive
     apt-get update
     apt-get install -y gcc smartmontools dmidecode python-pip python-dev tofrodos
-    sed -i "s/PermitRootLogin/\#PermitRootLogin/g" /etc/ssh/sshd_config
-    service ssh restart
+#    sed -i "s/PermitRootLogin/\#PermitRootLogin/g" /etc/ssh/sshd_config
+#    service ssh restart
 else
     echo "your os version is not supported!"
 fi
@@ -35,8 +37,7 @@ EOF
 echo "####install pip packages####"
 mkdir -p $work_dir
 
-source /etc/profile
-
+	
 echo "####config adminset agent####"
 if (echo $os|grep centos) || (echo $os|grep 'Red Hat')
 then
@@ -65,12 +66,13 @@ then
 elif (echo $os|grep Ubuntu)
 then
     pip install -U pip==19.0.3
+	cp /usr/local/bin/pip /usr/bin/pip   ##解决ubuntu下升级pip后报错问题
     pip install virtualenv==15.2.0
     scp $cur_dir/adminset_agent.py $work_dir
     scp $cur_dir/uninstall.sh $work_dir
-    scp $cur_dir/adminsetd.service /etc/systemd/system/
+    scp $cur_dir/adminsetd.service /lib/systemd/system/
     fromdos $work_dir/adminset_agent.py
-    fromdos /etc/systemd/system/adminsetd.service
+    fromdos /lib/systemd/system/adminsetd.service
     systemctl daemon-reload
     systemctl enable adminsetd
 else
@@ -93,4 +95,4 @@ echo "####client prepare finished!###"
 #fi
 service adminsetd start
 echo "####client install finished!###"
-echo "please using <service adminsetd start|restart|stop> manage adminset agent"
+echo "please using <service or systemd adminsetd start|restart|stop> manage adminset agent"

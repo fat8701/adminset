@@ -27,8 +27,8 @@ class Migration(migrations.Migration):
             name='Host',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('hostname', models.CharField(max_length=50, unique=True, verbose_name='\u4e3b\u673a\u540d')),
-                ('ip', models.GenericIPAddressField(verbose_name='\u7ba1\u7406IP')),
+                ('hostname', models.CharField(max_length=50, verbose_name='\u4e3b\u673a\u540d')),
+                ('ip', models.GenericIPAddressField(verbose_name='\u7ba1\u7406IP', unique=True)),
                 ('other_ip', models.CharField(blank=True, max_length=100, verbose_name='\u5176\u5b83IP')),
                 ('asset_no', models.CharField(blank=True, max_length=50, verbose_name='\u8d44\u4ea7\u7f16\u53f7')),
                 ('asset_type', models.CharField(blank=True, choices=[(b'1', '\u7269\u7406\u673a'), (b'2', '\u865a\u62df\u673a'), (b'3', '\u5bb9\u5668'), (b'4', '\u7f51\u7edc\u8bbe\u5907'), (b'5', '\u5b89\u5168\u8bbe\u5907'), (b'6', '\u5176\u4ed6')], max_length=30, null=True, verbose_name='\u8bbe\u5907\u7c7b\u578b')),

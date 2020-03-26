@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # coding=utf-8
 import os, re, platform, socket, time, json, threading
-import psutil, schedule, requests
+import psutil, schedule, requests, re
 from subprocess import Popen, PIPE
 import logging
 AGENT_VERSION = "1.0"
-token = 'HPcWR7l4NJNJ'
-server_ip = '192.168.47.130'
+token = 'PKX4UnbnPUVx'
+server_ip = '192.168.x.x'
 
 
 def log(log_name, path=None):
@@ -21,13 +21,15 @@ log("agent.log", "/var/opt/adminset/client/")
 
 
 def get_ip():
-    try:
-        hostname = socket.getfqdn(socket.gethostname())
-        ipaddr = socket.gethostbyname(hostname)
-    except Exception as msg:
-        print(msg)
-        ipaddr = ''
-    return ipaddr
+    netcard_info = []
+    info = psutil.net_if_addrs()
+    for k, v in info.items():
+        if re.match('eth|ens', k):
+            for item in v:
+                if item.family == 2 and item.address != '127.0.0.1':
+                    netcard_info.append(item.address)
+    return netcard_info[0]
+
 
 
 def get_dmi():

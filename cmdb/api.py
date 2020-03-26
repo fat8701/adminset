@@ -127,7 +127,7 @@ def collect(request):
         # asset_type = ""
         # status = ""
         try:
-            host = Host.objects.get(hostname=hostname)
+            host = Host.objects.get(ip=ip)
         except Exception as msg:
             print(msg)
             host = Host()
