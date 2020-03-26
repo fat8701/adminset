@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^idccabinetlist/(?P<idc_id>\d+)/$', idc.cabinet_list, name='idc_cabinet_list'),
     url(r'^collect', api.collect, name='update_api'),
     url(r'^gethost/', api.get_host, name='get_host'),
+    url(r'^getip/', api.get_ip, name='get_ip'),
     url(r'^getgroup/', api.get_group, name='get_group'),
     url(r'^nodestatus/(?P<ids>\d+)/$', asset.node_status, name='node_status'),
 ]
