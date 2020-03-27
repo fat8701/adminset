@@ -46,27 +46,28 @@ def asset(request):
     asset_id_all = request.GET.getlist("id", '')
 
 
-    if group_id:
-        group = get_object(HostGroup, id=group_id)
-        if group:
-            asset_find = Host.objects.filter(group=group).order_by('ip')
-
-    if cabinet_id:
-        cabinet = get_object(Cabinet, id=cabinet_id)
-        if cabinet:
-            asset_find = Host.objects.filter(cabinet=cabinet).order_by('ip')
-    elif idc_id:
-        idc = get_object(Idc, id=idc_id)
-        if idc:
-            asset_find = Host.objects.filter(idc=idc).order_by('ip')
-    else:
-        asset_find = Host.objects.all().order_by('ip')
+    # if group_id:
+    #     group = get_object(HostGroup, id=group_id)
+    #     if group:
+    #         asset_find = Host.objects.filter(group=group).order_by('ip')
+    #
+    # if cabinet_id:
+    #     cabinet = get_object(Cabinet, id=cabinet_id)
+    #     if cabinet:
+    #         asset_find = Host.objects.filter(cabinet=cabinet).order_by('ip')
+    # elif idc_id:
+    #     idc = get_object(Idc, id=idc_id)
+    #     if idc:
+    #         asset_find = Host.objects.filter(idc=idc).order_by('ip')
+    # else:
+    asset_find = Host.objects.all().order_by('ip')
 
     if idc_name:
         asset_find = asset_find.filter(idc__name__contains=idc_name)
     if group_name:
-        get_group = HostGroup.objects.get(name=group_name)
-        asset_find = get_group.serverList.all().order_by('ip')
+        asset_find = asset_find.filter(hostgroup__name__contains=group_name)
+        #get_group = HostGroup.objects.get(name=group_name)
+        #asset_find = get_group.serverList.all().order_by('ip')
     if asset_type:
         asset_find = asset_find.filter(asset_type__contains=asset_type)
     if status:

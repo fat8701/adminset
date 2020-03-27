@@ -142,15 +142,15 @@
 
                 <label for="page_len">
                     <select name="page_len" id="page_len" class="form-control m-b input-sm" onchange="change_info()">
-                        {% ifequal page_len '10' %}
-                            <option value="10" selected>10</option>
+                        {% ifequal page_len '15' %}
+                            <option value="15" selected>15</option>
                         {% else %}
-                            <option value="10">10</option>
+                            <option value="15">15</option>
                         {% endifequal %}
-                        {% ifequal page_len '20' %}
-                            <option value="20" selected>20</option>
+                        {% ifequal page_len '30' %}
+                            <option value="30" selected>30</option>
                         {% else %}
-                            <option value="20">20</option>
+                            <option value="30">30</option>
                         {% endifequal %}
                         {% ifequal page_len '50' %}
                             <option value="50" selected>50</option>
