@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 import os, re, platform, socket, time, json, threading
-import psutil, schedule, requests, re
+import psutil, schedule, requests, re, math
 from subprocess import Popen, PIPE
 import logging
 AGENT_VERSION = "1.0"
@@ -58,7 +58,8 @@ def get_mem_total():
     p = Popen(cmd, stdout=PIPE, shell = True)
     data = p.communicate()[0]
     mem_total = data.split()[1]
-    memtotal = int(round(int(mem_total)/1024.0/1024.0, 0))
+    #memtotal = int(round(int(mem_total)/1024.0/1024.0, 0))
+    memtotal = int(math.ceil(int(mem_total) / 1024.0 / 1024.0))
     return memtotal
 
 
