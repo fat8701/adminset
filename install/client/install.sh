@@ -11,7 +11,7 @@ if (echo $os|grep centos) || (echo $os|grep 'Red Hat')
 then
     yum makecache fast
     yum install -y epel-release
-    yum install -y gcc smartmontools dmidecode python-pip python-devel  libselinux-python dos2unix
+    yum install -y gcc smartmontools dmidecode python-pip python-devel dos2unix
 elif (echo $os|grep Ubuntu)
 then
     export DEBIAN_FRONTEND=noninteractive
