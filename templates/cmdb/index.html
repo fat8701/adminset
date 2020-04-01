@@ -139,7 +139,10 @@
             <div class="col-md-5">
             </div>
                 <div class="box-body">
-
+                    <div class="btn-group">
+                        <a id="assetdel" class="btn btn-danger" style="display: none"  name="del_button">
+                            删除设备</a>
+                    </div>
                 <label for="page_len">
                     <select name="page_len" id="page_len" class="form-control m-b input-sm" onchange="change_info()">
                         {% ifequal page_len '15' %}
@@ -169,6 +172,7 @@
                         {% endifequal %}
                     </select>
                             </label>
+
                              <div class="input-group inline-group col-md-3" style="float: right">
                                 <input type="text" class="form-control" id="search_input" name="keyword" value="{{ keyword }}" placeholder="Search">
 {#                                <input type="text" style="display: none">#}
@@ -187,9 +191,11 @@
                                     <th>节点状态</th>
                                     <th>管理IP</th>
                                     <th>主机名</th>
-                                    <th>CPU</th>
+                                    <th>CPU(C)</th>
                                     <th>内存(G)</th>
-                                    <th>机房</th>
+                                    <th>操作系统</th>
+                                    <th>位置</th>
+                                    <th>备注</th>
                                     <th class="text-center">功能</th>
                                 </tr>
                             </thead>
@@ -204,7 +210,9 @@
                                         <td>{{ host.hostname }}</td>
                                         <td>{{ host.cpu_num }}</td>
                                         <td>{{ host.memory }}</td>
-                                        <td>{{ host.idc }}</td>
+                                        <td>{{ host.os }}</td>
+                                        <td>{{ host.position }}</td>
+                                        <td>{{ host.memo }}</td>
                                         <td class="text-center" data-editable='false'>
                                             <div align="center">
                                             <a id="webssh" style="display: none; float: left; margin: auto;" class="btn btn-sm btn-info" target="_blank" href="{% url 'webssh' host.id %}">SSH</a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -220,7 +228,8 @@
                     {% include 'paginator.html' %}
                 </div>
                     <div class="btn-group">
-                        <a id="assetdel" class="btn btn-danger" style="display: none"  name="del_button">删除设备</a>
+                        <a id="assetdel_1" class="btn btn-danger" style="display: none"  name="del1_button">
+                            删除设备</a>
                     </div>
                 </div>
             </div>
@@ -374,6 +383,28 @@ function asset_import(){
     });
 
 </script>
+
+<script>
+    $('#assetdel_1').click(function () {
+        var asset_id_all = getIDall();
+        if (asset_id_all == ''){
+            alert("请至少选择一行!");
+            return false;
+        }
+        if (confirm("确定删除?")) {
+            $.ajax({
+                type: "post",
+                data: {asset_id_all: asset_id_all,csrfmiddlewaretoken: '{{ csrf_token }}'},
+                url: "{% url 'asset_del' %}?arg=batch",
+                success: function () {
+                    parent.location.reload();
+                }
+            });
+        }
+    });
+
+</script>
+
 <script>
 function node_status(args) {
       $.get("/cmdb/nodestatus/"+args+"/",function(data,status){
