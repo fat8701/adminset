@@ -34,10 +34,13 @@
         var success = {{ status }};
         if ( success == '1' ) {
             parent.$("#handle_status").val('1');
-              parent.layer.close(index);
+            parent.layer.close(index);
+            window.parent.location.reload();
+
         } else if( success == '2' ) {
             parent.$("#handle_status").val('2');
             parent.layer.close(index);
+            window.parent.location.reload();
         }
 </script>
 </body>
