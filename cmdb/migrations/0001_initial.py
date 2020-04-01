@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
                 ('cpu_model', models.CharField(blank=True, max_length=100, verbose_name='CPU\u578b\u53f7')),
                 ('cpu_num', models.CharField(blank=True, max_length=100, verbose_name='CPU\u6570\u91cf')),
                 ('memory', models.CharField(blank=True, max_length=30, verbose_name='\u5185\u5b58\u5927\u5c0f')),
-                ('disk', models.CharField(blank=True, max_length=255, verbose_name='\u786c\u76d8\u4fe1\u606f')),
+                ('disk', models.TextField(blank=True, max_length=200, verbose_name='\u786c\u76d8\u4fe1\u606f')),
                 ('sn', models.CharField(blank=True, max_length=60, verbose_name='SN\u53f7 \u7801')),
                 ('position', models.CharField(blank=True, max_length=100, verbose_name='\u6240\u5728\u4f4d\u7f6e')),
                 ('memo', models.TextField(blank=True, max_length=200, verbose_name='\u5907\u6ce8\u4fe1\u606f')),

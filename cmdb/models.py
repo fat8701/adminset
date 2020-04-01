@@ -65,10 +65,10 @@ class Host(models.Model):
     cpu_model = models.CharField(u"CPU型号", max_length=100, blank=True)
     cpu_num = models.CharField(u"CPU数量", max_length=100, blank=True)
     memory = models.CharField(u"内存大小", max_length=30, blank=True)
-    disk = models.CharField(u"硬盘信息", max_length=255, blank=True)
+    disk = models.TextField(u"硬盘信息", blank=True)
     sn = models.CharField(u"SN号 码", max_length=60, blank=True)
     position = models.CharField(u"所在位置", max_length=100, blank=True)
-    memo = models.TextField(u"备注信息", max_length=200, blank=True)
+    memo = models.TextField(u"备注信息",  blank=True)
 
     def __unicode__(self):
         return self.hostname

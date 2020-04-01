@@ -156,8 +156,11 @@ def collect(request):
         host.os = osver
         host.vendor = vendor
         host.ip = ip
-        # host.asset_type = asset_type
-        # host.status = status
+        #如果值为空或NULL，则设置一个默认值
+        if host.asset_type == '' or not host.asset_type:
+            host.asset_type = 6
+        if host.status == '' or not host.status:
+            host.status = 4
         host.save()
         return HttpResponse("Post asset data to server successfully!")
     else:
