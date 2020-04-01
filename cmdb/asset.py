@@ -108,7 +108,7 @@ def create_asset_excel(export, asset_id_all):
             writer = csv.writer(response)
             writer.writerow([ str2gb(u'IP地址'), str2gb(u'主机名'),str2gb(u'其它IP'), str2gb(u'所在机房'),
                              str2gb(u'资产编号'), str2gb(u'设备类型'), str2gb(u'设备状态'), str2gb(u'操作系统'),
-                             str2gb(u'设备厂商'), str2gb(u'CPU型号'), str2gb(u'CPU核数'), str2gb(u'内存大小'),
+                             str2gb(u'设备厂商'), str2gb(u'CPU型号'), str2gb(u'CPU核数'), str2gb(u'内存大小(G)'),
                              str2gb(u'硬盘信息'), str2gb(u'SN号码'), str2gb(u'所在位置'),
                              str2gb(u'备注信息')])
             for h in asset_find:
@@ -137,7 +137,7 @@ def create_asset_excel(export, asset_id_all):
         writer = csv.writer(response)
         writer.writerow([str2gb('IP地址'), str2gb('主机名'), str2gb('其它IP'), str2gb('所在机房'), str2gb('资产编号'),
                          str2gb('设备类型'), str2gb('设备状态'), str2gb('操作系统'), str2gb('设备厂商'), str2gb('CPU型号'),
-                         str2gb('CPU核数'), str2gb('内存大小'), str2gb('硬盘信息'), str2gb('SN号码'),
+                         str2gb('CPU核数'), str2gb('内存大小(G)'), str2gb('硬盘信息'), str2gb('SN号码'),
                          str2gb('所在位置'), str2gb('备注信息')])
         for h in host:
             if h.asset_type:
