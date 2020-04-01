@@ -23,11 +23,11 @@ TIME_SECTOR = (
 
 @login_required()
 @permission_verify()
-def get_cpu(request, hostname, timing):
+def get_cpu(request, ip, timing):
     data_time = []
     cpu_percent = []
     range_time = TIME_SECTOR[int(timing)]
-    cpu_data = GetSysData(hostname, "cpu", range_time)
+    cpu_data = GetSysData(ip, "cpu", range_time)
     for doc in cpu_data.get_data():
         unix_time = doc['timestamp']
         times = time.localtime(unix_time)
@@ -41,11 +41,11 @@ def get_cpu(request, hostname, timing):
 
 @login_required()
 @permission_verify()
-def get_mem(request, hostname, timing):
+def get_mem(request, ip, timing):
     data_time = []
     mem_percent = []
     range_time = TIME_SECTOR[int(timing)]
-    mem_data = GetSysData(hostname, "mem", range_time)
+    mem_data = GetSysData(ip, "mem", range_time)
     for doc in mem_data.get_data():
         unix_time = doc['timestamp']
         times = time.localtime(unix_time)
@@ -59,12 +59,12 @@ def get_mem(request, hostname, timing):
 
 @login_required()
 @permission_verify()
-def get_disk(request, hostname, timing, partition):
+def get_disk(request, ip, timing, partition):
     data_time = []
     disk_percent = []
     disk_name = ""
     range_time = TIME_SECTOR[int(timing)]
-    disk = GetSysData(hostname, "disk", range_time)
+    disk = GetSysData(ip, "disk", range_time)
     for doc in disk.get_data():
         unix_time = doc['timestamp']
         times = time.localtime(unix_time)
@@ -80,13 +80,13 @@ def get_disk(request, hostname, timing, partition):
 
 @login_required()
 @permission_verify()
-def get_net(request, hostname, timing, net_id):
+def get_net(request, ip, timing, net_id):
     data_time = []
     nic_in = []
     nic_out = []
     nic_name = ""
     range_time = TIME_SECTOR[int(timing)]
-    net = GetSysData(hostname, "net", range_time)
+    net = GetSysData(ip, "net", range_time)
     for doc in net.get_data():
         unix_time = doc['timestamp']
         times = time.localtime(unix_time)
@@ -112,9 +112,9 @@ def index(request):
 
 @login_required()
 @permission_verify()
-def host_info(request, hostname, timing):
+def host_info(request, ip, timing):
     # 传递磁盘号给前端JS,用以迭代分区图表
-    disk = GetSysData(hostname, "disk", 3600, 1)
+    disk = GetSysData(ip, "disk", 3600, 1)
     disk_data = disk.get_data()
     partitions_len = []
     for d in disk_data:
@@ -122,7 +122,7 @@ def host_info(request, hostname, timing):
         for x in range(p):
             partitions_len.append(x)
     # 传递网卡号给前端,用以迭代分区图表
-    net = GetSysData(hostname, "net", 3600, 1)
+    net = GetSysData(ip, "net", 3600, 1)
     nic_data = net.get_data()
     nic_len = []
     for n in nic_data:
@@ -136,16 +136,16 @@ def host_tree():
     host_node = []
     for idc in Idc.objects.all():
         single_server_list = []
-        for host in idc.host_set.all():
+        for host in idc.host_set.all().order_by('ip'):
             if not host.cabinet_set.all():
-                single_server_list.append({'name': host.hostname, 'url': "/monitor/system/{}/0/".format(host.hostname), 'target':"myframe"})
+                single_server_list.append({'name': host.ip, 'url': "/monitor/system/{}/0/".format(host.ip), 'target':"myframe"})
         cabinet_list = []
         cabinets = idc.cabinet_set.all()
         for cabinet in cabinets:
             server_list = []
             servers = cabinet.serverList.all()
             for server in servers:
-                server_data = {'name': server.hostname, 'url': "/monitor/system/{}/0/".format(server.hostname), 'target':"myframe"}
+                server_data = {'name': server.ip, 'url': "/monitor/system/{}/0/".format(server.ip), 'target':"myframe"}
                 server_list.append(server_data)
             cabinet_data = {'name': cabinet.name, 'children': server_list}
             cabinet_list.append(cabinet_data)
@@ -153,6 +153,7 @@ def host_tree():
         data = {"name": idc.name, "open": False, "children": cabinet_list + single_server_list }
         del cabinet_list
         host_node.append(data)
+
     return host_node
 
 
@@ -160,9 +161,9 @@ def group_tree():
     group_node = []
     for group in HostGroup.objects.all():
         server_list = []
-        servers = group.serverList.all()
+        servers = group.serverList.all().order_by('ip')
         for server in servers:
-            server_data = {'name': server.hostname, 'url': "/monitor/system/{}/0/".format(server.hostname), 'target':"myframe"}
+            server_data = {'name': server.ip, 'url': "/monitor/system/{}/0/".format(server.ip), 'target':"myframe"}
             server_list.append(server_data)
         group_data = {'name': group.name, "open": False, 'children': server_list}
         group_node.append(group_data)
@@ -180,7 +181,7 @@ def group_tree():
 #             p2 = Delivery.objects.get(job_name_id=pjs.id)
 #             servers = p2.serverList.all()
 #             for server in servers:
-#                 server_data = {'name': server.hostname, 'url': "/monitor/system/{}/0/".format(server.hostname), 'target':"myframe"}
+#                 server_data = {'name': server.ip, 'url': "/monitor/system/{}/0/".format(server.ip), 'target':"myframe"}
 #                 server_list.append(server_data)
 #             project_data = {'name': pjs.name, 'children': server_list}
 #             project_list.append(project_data)

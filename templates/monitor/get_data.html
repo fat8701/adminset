@@ -2,7 +2,7 @@
 var mycpu = echarts.init(document.getElementById('cpu'));
 mycpu.showLoading();
 setInterval(function () {
-$.get("/monitor/getcpu/{{ hostname }}/"+timing).done(function (data) {
+$.get("/monitor/getcpu/{{ ip }}/"+timing).done(function (data) {
     var data = JSON.parse(data);
     mycpu.hideLoading();// 加载动画
     mycpu.setOption({
@@ -56,7 +56,7 @@ $.get("/monitor/getcpu/{{ hostname }}/"+timing).done(function (data) {
 var mymemory = echarts.init(document.getElementById('memory'));
 mymemory.showLoading();
 setInterval(function () {
-$.get("/monitor/getmem/{{ hostname }}/"+timing).done(function (data) {
+$.get("/monitor/getmem/{{ ip }}/"+timing).done(function (data) {
     var data = JSON.parse(data);
     mymemory.hideLoading();// 加载动画
     mymemory.setOption({
@@ -112,7 +112,7 @@ $.get("/monitor/getmem/{{ hostname }}/"+timing).done(function (data) {
 var disk{{ p }} = echarts.init(document.getElementById("disk{{ p }}"));
 disk{{ p }}.showLoading();
 setInterval(function () {
-$.get("/monitor/getdisk/{{ hostname }}/"+timing+"/"+{{ p }}).done(function (data) {
+$.get("/monitor/getdisk/{{ ip }}/"+timing+"/"+{{ p }}).done(function (data) {
     var data = JSON.parse(data);
     disk{{ p }}.hideLoading();// 加载动画
     disk{{ p }}.setOption({
@@ -169,7 +169,7 @@ $.get("/monitor/getdisk/{{ hostname }}/"+timing+"/"+{{ p }}).done(function (data
 var net{{ nic }} = echarts.init(document.getElementById("net{{ nic }}"));
 net{{ nic }}.showLoading();
 setInterval(function () {
-$.get("/monitor/getnet/{{ hostname }}/"+timing+"/"+{{ nic }}).done(function (data) {
+$.get("/monitor/getnet/{{ ip }}/"+timing+"/"+{{ nic }}).done(function (data) {
     var data = JSON.parse(data);
     net{{ nic }}.hideLoading();// 加载动画
     net{{ nic }}.setOption({
