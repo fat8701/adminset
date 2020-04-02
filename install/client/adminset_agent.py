@@ -268,7 +268,7 @@ def get_pid():
 
 
 def clean_log():
-    os.system("> /var/opt/adminset/agent.log")
+    os.system("> /var/opt/adminset/client/agent.log")
     logging.info("clean agent log")
 
 
