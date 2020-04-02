@@ -24,7 +24,7 @@ def get_ip():
     netcard_info = []
     info = psutil.net_if_addrs()
     for k, v in info.items():
-        if re.match('eth|ens', k):
+        if re.match('eth|ens|xenbr|xapi', k):
             for item in v:
                 if item.family == 2 and item.address != '127.0.0.1':
                     netcard_info.append(item.address)
