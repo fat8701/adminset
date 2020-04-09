@@ -7,7 +7,7 @@ from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.views.decorators.csrf import csrf_exempt
 from lib.common import token_verify
 from lib.deploy_key import deploy_key
-import logging
+import logging,re
 from lib.log import log
 from config.views import get_dir
 
@@ -157,6 +157,9 @@ def collect(request):
         host.vendor = vendor
         host.ip = ip
         #如果值为空或NULL，则设置一个默认值
+        if re.match('xen|vmware|kvm',host.vendor,flags=re.I):
+            host.asset_type = 2
+            host.status = 1
         if host.asset_type == '' or not host.asset_type:
             host.asset_type = 6
         if host.status == '' or not host.status:
