@@ -53,12 +53,40 @@
                                 </td>
                                 </tr>
                                 <tr class="even gradeX">
-                                    <td>sn</td>
-                                    <td>{{ host.sn }}</td>
-                                </tr>
-                                <tr class="even gradeX">
                                     <td>操作系统</td>
                                     <td>{{ host.os }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>设备类型</td>
+                                    <td>
+                                        {% if host.asset_type == '1' %}
+                                            物理机
+                                        {% elif host.asset_type == '2' %}
+                                            虚拟机
+                                        {% elif host.asset_type == '3' %}
+                                            容器
+                                        {% elif host.asset_type == '4' %}
+                                            网络设备
+                                        {% elif host.asset_type == '5' %}
+                                            安全设备
+                                        {% elif host.asset_type == '6' %}
+                                            其他
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>设备状态</td>
+                                    <td>
+                                        {% if host.status == '1' %}
+                                            使用中
+                                        {% elif host.status == '2' %}
+                                            未使用
+                                        {% elif host.status == '3' %}
+                                            故障
+                                        {% elif host.status == '4' %}
+                                            其他
+                                        {% endif %}
+                                    <td>
                                 </tr>
                                 <tr class="even gradeX">
                                     <td>设备厂商</td>
@@ -71,6 +99,10 @@
                                 <tr class="even gradeX">
                                     <td>资产编号</td>
                                     <td>{{ host.asset_no }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>sn</td>
+                                    <td>{{ host.sn }}</td>
                                 </tr>
                                 <tr class="even gradeX">
                                     <td>上架时间</td>

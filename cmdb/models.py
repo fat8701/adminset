@@ -9,7 +9,7 @@ ASSET_STATUS = (
     (str(1), u"使用中"),
     (str(2), u"未使用"),
     (str(3), u"故障"),
-    (str(4), u"其它"),
+    (str(4), u"其他"),
     )
 
 ASSET_TYPE = (
