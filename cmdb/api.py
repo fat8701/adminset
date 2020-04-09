@@ -160,9 +160,10 @@ def collect(request):
         if re.match('xen|vmware|kvm',host.vendor,flags=re.I):
             host.asset_type = 2
             host.status = 1
-        if host.asset_type == '' or not host.asset_type:
+        else:
+        # if host.asset_type == '' or not host.asset_type:
             host.asset_type = 6
-        if host.status == '' or not host.status:
+        # if host.status == '' or not host.status:
             host.status = 4
         host.save()
         return HttpResponse("Post asset data to server successfully!")

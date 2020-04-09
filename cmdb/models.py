@@ -51,14 +51,14 @@ class Idc(models.Model):
 
 
 class Host(models.Model):
-    hostname = models.CharField(max_length=50, verbose_name=u"主机名")
     ip = models.GenericIPAddressField(u"管理IP", max_length=15, unique=True)
+    hostname = models.CharField(max_length=50, verbose_name=u"主机名")
     account = models.ForeignKey(AuthInfo, verbose_name=u"账号信息", on_delete=models.SET_NULL, null=True, blank=True)
-    idc = models.ForeignKey(Idc, verbose_name=u"所在机房", on_delete=models.SET_NULL, null=True, blank=True)
+    idc = models.ForeignKey(Idc, verbose_name=u"所在机房", on_delete=models.SET_NULL, null=True, blank=True, default='1')
     other_ip = models.CharField(u"其它IP", max_length=100, blank=True)
     asset_no = models.CharField(u"资产编号", max_length=50, blank=True)
-    asset_type = models.CharField(u"设备类型", choices=ASSET_TYPE, max_length=30, null=True, blank=True)
-    status = models.CharField(u"设备状态", choices=ASSET_STATUS, max_length=30, null=True, blank=True)
+    asset_type = models.CharField(u"设备类型", choices=ASSET_TYPE, max_length=30, null=True, blank=True, default='2')
+    status = models.CharField(u"设备状态", choices=ASSET_STATUS, max_length=30, null=True, blank=True, default='1')
     os = models.CharField(u"操作系统", max_length=100, blank=True)
     vendor = models.CharField(u"设备厂商", max_length=50, blank=True)
     up_time = models.CharField(u"上架时间", max_length=50, blank=True)
