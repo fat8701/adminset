@@ -1,6 +1,6 @@
 <div class="col-sm-6">
-    <div class="dataTables_paginate paging_simple_numbers">
-        <ul class="pagination" style="margin-top: 0; float: right">
+    <div class="dataTables_paginate paging_simple_numbers" style="text-align: center">
+        <ul class="pagination" style="margin-top: 0">
             {% if contacts.has_previous %}
                 <li class="paginate_button previous" aria-controls="editable" tabindex="0" >
                     <a class="page" href="?page={{ contacts.previous_page_number }}&page_len={{ page_len }}">Previous</a>
@@ -30,6 +30,7 @@
             {% else %}
                 <li class="paginate_button next" aria-controls="editable" tabindex="0">
                     <a class="page" href="?page={{ end_page }}&page_len={{ page_len }}">End</a>
+                    <a class="align-center">共{{ p.count }}项</a>
                 </li>
             {% endif %}
         </ul>

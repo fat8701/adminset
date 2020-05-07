@@ -178,7 +178,7 @@ def asset_import(request):
                     except Exception as msg:
                         host = Host()
                         host.ip = data0
-                    host.hostname = data[1]
+                    host.hostname = str2gb2utf8(data[1])
                     host.other_ip = str2gb2utf8(data[2])
                     if data[3]:
                         try:
