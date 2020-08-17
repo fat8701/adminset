@@ -162,9 +162,9 @@ def collect(request):
             host.status = 1
         else:
         # if host.asset_type == '' or not host.asset_type:
-            host.asset_type = 6
+            host.asset_type = 1
         # if host.status == '' or not host.status:
-            host.status = 4
+            host.status = 1
         host.save()
         return HttpResponse("Post asset data to server successfully!")
     else:
