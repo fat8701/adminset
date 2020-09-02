@@ -37,7 +37,7 @@ class GetSysData(object):
         collection = db[self.ip]
         now_time = int(time.time())
         find_time = now_time-self.timing
-        cursor = collection.find({'timestamp': {'$gte': find_time}}, {self.monitor_item: 1, "timestamp": 1}).limit(self.no)
+        cursor = collection.find({'timestamp': {'$gte': find_time}}, {"_id": 0, self.monitor_item: 1}).limit(self.no)
         return cursor
 
 

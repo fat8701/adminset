@@ -310,7 +310,7 @@ def webssh(request, ids):
 def node_status(request, ids):
     data = 2
     host = Host.objects.get(id=ids)
-    cpu_data = GetSysData(host.ip, "cpu", 1800)
+    cpu_data = GetSysData(host.ip, "ip", 3600)
     for doc in cpu_data.get_data():
         if doc:
             data = 1
